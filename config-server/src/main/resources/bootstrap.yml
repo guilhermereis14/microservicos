@@ -1,0 +1,91 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: config-server
+  rabbitmq:
+    host: rabbitmq-srm
+    port: 5672
+    username: guest
+    password: guest
+  cloud:
+    config:
+      server:
+        git:
+          search-paths: estoqueservice, pedidoservice
+          uri: https://github.com/guilhermereis14/srm-config-repo.git
+#          username: username
+#          password: password
+          ignoreLocalSshSettings: true
+          hostKey: someHostKey
+          hostKeyAlgorithm: ssh-rsa
+          privateKey: -----BEGIN RSA PRIVATE KEY-----
+                      MIIJKgIBAAKCAgEAvIwW6W+layr0iZJO9CnJp2O7WaNWfr1e4QbUij2mBinYdmZE
+                      wummkaN0ccrJZCpAC3D+TiBzNqxkQiVEN423BglFCRd216vgAI5Y/o2tE3ox72kN
+                      J82N/p1mT3rqR9GIbm4YvzfSH2F6n1lNW5HPrLlqKk8ajjY0bvK+SCOsDBuJ4Ck/
+                      q8ro6XCOAjAco39ftZeV4mcV0nDdpXXVshoxTQTh5zk5Vvffnvh7YefO3/avy71d
+                      D2wwohXdw6apLuuh4acl5IolBAghbBl8j2xGXChipEGIs8PbmFVwuprM8KrsDbsT
+                      oU8bn4zw7AdjVExGFQcuycjWo9Q7gdd1b1Sp6Hb7NnvQHik2yR9fp6V/48HBvZRZ
+                      zBhYnQumSd5c9f5jNlHcJsmWeRTJnVK3r5pUwqjF5YzxlAoK7qo9lF4tP3vjM9ua
+                      REKN62/tIACzqK8I9UKYbSQldQeVZpRc6wrXIzRvfjkPdGA+pxaUkUIxsuXOYOsD
+                      afZIRPlDE8WbponEUXSZro25YaIJX0z3yd/fNVGXfZqy/GPI6pXAlQ/cQRTZ621N
+                      FXgB1iMdY1or3zz1lwYtL9VG65CIxTFYyP3bDARQSRtD7Xp0L4iZ4EdPm8vwjx/j
+                      kCJlrS9AR6vfhrb9XqCRvfcAWJIyLTFmxQ2gL7UGBpTLu1pCSyx7UejLsN0CAwEA
+                      AQKCAgEApW8Jn3MNonWDML5GNmf//rY8KY9uki/YcvtKO62R4fCPdHuRM7BNLZZM
+                      0pdKk2+a2C8hgy1nyf4CziLisxfOEibKAwsqhFvTZMmBfoCS7vcVn2n+WAE86L30
+                      iiJgM/m+ip5hak4xOMWQEQcLICBVJsldRJg5xbP716l3mdZq3AjBtgSbUEHukPzo
+                      LTVHu5FEShIiOg+XDxlm8QnuIaJnxZtWF0qXbB57gIGnyKTbWJmbb9nMMH8OQPmM
+                      pmGyKnAnjtXZIqivh9UWdkH6j+FB7xSkUFkL+CcOo5+8FI9E6JogGoAd3jiKFTlW
+                      HtLwrYNrLoIp5HUrF35dZDTHXpLbrJIrHhp4fNH4g3eIx4xdO7uaqRZ5onNiqoIK
+                      /yDx/aQw67ZRUjXiLjQWQuvvmictOmAHsBh3ccERM1W4HxXyZRH4c6BDfVDTMLmE
+                      XeJeJK5xaUcBqjDFjgITnFBpfD759grgYmyZY/aridsySqHUX4vctUdexhgABrzh
+                      G649FpH5hTwNjRkjZGKuf6BjV08qQXQk8pGVBG5v3HTPliYSXAFRToJZsGuPeDwu
+                      HHQNEoCHcEm2EcG3RwupDbs2zYYMy4wBERMly4OdkxC9cljji6pHg3vwBxhVx2RA
+                      y9RUdM/CI17Ljb6br68WPS0u6W8LEfSFdhAYM2WbOZA4wGIWcGECggEBAODy+bPb
+                      7mTRaSM6JOF5yqnrWamih+JE3fVxa86ioTrbtSLvBH3XLUa+nNTIR7D/uUVC5jJ3
+                      6pO6kTtP1wHJ1+Pj8v63+ygjAMUBrv/C4XnUEFHL1PNPYpnPh4kbYbsgqwCG4Vv6
+                      7mHcuxtOnsrheiyB34oCFCD61BpRf19nj0bOkpwZf2iTBu5eyjgfav+QebhhL/yl
+                      23AlqUjAKeSbtFBB/78Y5Wtbt/1P/kXiA8AcFc+cBRxQ1c7T7gP7D7RUnvyDW866
+                      OVAL3oV3MvQWqsVzlOvShtpBxj88pKxBRwjXkobB9IPMEPKLoFS8GsbdxFckhRXM
+                      6jg6NR4ehBcSj4kCggEBANaSx9gAHvaoLKP3QBRWe1pGx+uTi13VG6utnwJDwEOW
+                      P/hfP4x2oG49VMHlbJv28mb2MN8mTGIVohdtnRoQyjdKKLnFXPiG90W8TW8QSxE5
+                      wc75PfzvxiafqtuzhV1qOJb2Yr5ai6W6j+PNS7s9tpMgc+p411UReE98KEBJjfV9
+                      xg0ES3us8pDtqIu64LpqIJbItgWfg1C5/Lcz19sQ4xVofGfd40iRbRGceV20AKd+
+                      uv+qA/psJstl2RX9tJmXg6WwuTplljBb/Y4EFTo6ze1Q7SuotHGo3E090Zr2gycm
+                      0hWj+jdC6FXVUjgYheClwNvy+QBjz72Gt2fk5IeATbUCggEBAIEXr2kia9r7umR2
+                      97dV15JP9/K7zVNyxhYW8xFwjyph77+Of3tgQyF4PjR2g332I3K2A7kuzDXfOX1a
+                      Qj9KgFTN+iNnngDYpZZpcu5f/lmV84+ddCX1htZSHKv4RMvI4Zm5zhalGKycqdvv
+                      8HzpjN2B4rEmpDqQ96vq3Tf5DGZMIiLnFxECX1XonBA9J4BmfxPq4kkRPa9MTavs
+                      a55AJOhyF7ypIu/LgPkkMP4VyKU0+Odd2Cj50tmREeTC7a5Fab/r+oHWqRFg3mCl
+                      mV4uq+4IeIwlEzKp0IV13eLky0ktvW8MW7BPKeKncmluUceSeRyxXpa2NCv0a4tP
+                      Y+qBwlECggEBAJjGbW/HtkQcvZwJASD56l3+o32B0er/PvJfbiWoo437vpRTDOYv
+                      2E5lcKGVfl0V2MWiaG2Z0SzNBlnz+7WBWtk+/fw3H9j8D7chOWjoiuo621lIcPBU
+                      sBrz+CzxhvVaGeyyhN/PjDp1uNmTZGZurD3ZD29UlszE4YqGdgo/1MmDwa2m7y+h
+                      lhvGewjyB+vygD2brq4WQuMJaXvvd7NMNMMbX+h8PcV/dc7iQC+NaCHZw78hCDAX
+                      LRAI9iYIO7xX+q3QRDHl/qdz9/ZTxeFt2Q0tX5CET+XVOvXsG/9foUYRB+fMlu0d
+                      wFrMxfuWykuG+Ogh+VRjvJfPAWsBuA0aNzkCggEACDU0ldzW26cXqkTkMPqm7cWJ
+                      n2UredDoa3qtT3KIiAD6STS/5urzKDScJS0hEQAMZNZt6Zbs8C2A2ycRcjPQrgWC
+                      6Ljx+MYb2U9Ac46vi+Lk9Uv2dWUZrVpowf8b2hBefY1WgYZXTm/uKAU/aGwtWhMx
+                      +nYcMUxdmchvFPtcCbHIkBYxewOC65xBT7HrzrK5eDtuhcZ9HIwWf/wkFKUGtn7m
+                      CVWrXApj9v46BLBiigLQMspiir40ywiqXMobzjRTMeM6lzQbdHIIqUT0byopqXT8
+                      iHJ0I1auvWGuZHu7RBwHbTban/UuahMbprwMJ1EPVCfEiSOk6oRvrI6S4kJt4Q==
+                      -----END RSA PRIVATE KEY-----
+          
+
+#      server:
+#        native:
+#          searchLocations: file:///usr/local/config-repo/estoqueservice
+
+
+encrypt:
+  key: '12313213'
+
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://service-discovery:8080/eureka/
+

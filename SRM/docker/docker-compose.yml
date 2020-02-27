@@ -1,0 +1,45 @@
+version: '3'
+
+networks:
+  srm:
+    driver: bridge
+    driver_opts:
+        com.docker.network.enable_ipv4: "true"
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.32.0.0/16
+
+volumes:
+  mysql:
+    driver: local
+
+services:
+
+  estoque-service:
+    image: srm/estoque-service:parte1
+    container_name: srm_estoque
+    networks:
+      srm:
+        ipv4_address: 172.32.0.101
+    environment:
+      TZ: "America/Sao_Paulo"
+      PROFILE: "local"
+      SERVER_PORT: "8080"
+      
+
+  database:
+    image: mysql:5.7
+    container_name: srm_mysql
+    command: --init-file /usr/home/database/init.sql
+    restart: always
+    networks:
+      srm:
+        ipv4_address: 172.32.0.102
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: db_srm
+      TZ: "America/Sao_Paulo"
+    volumes:
+      - mysql:/var/lib/mysql
+      - ./src/mysql:/usr/home/database
