@@ -1,63 +1,67 @@
 package com.example.demo.service;
 
-import org.hibernate.service.spi.ServiceException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-import com.example.demo.model.Product;
+
+import com.example.demo.exception.BusinessServiceException;
+import com.example.demo.model.ProductEntity;
 import com.example.demo.repository.ProductRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
+@Slf4j
 @Service
+@RefreshScope
 public class ProductService {
-	
-	private static Logger logger = LoggerFactory.getLogger(ProductService.class);
-	
+
 	@Autowired
 	private ProductRepository productRepository;
-	
-	public Product save(Product product) {
-				
+
+	@Value("${srm.message.fail}")
+	private String messageFail;
+
+	@Transactional
+	public ProductEntity save(ProductEntity product) {
+		log.info("m=save, product={}", product);
+		if (productRepository.findByIsbn(product.getIsbn()) != null)
+			throw new BusinessServiceException("Já existe um produto com esse codigo ISBN");
 		return productRepository.save(product);
-		
 	}
-	
-	public Product findByBarCode(String barCode) {
-		return productRepository.findByBarCode(barCode);
+
+	public void delete(String isbn) {
+		log.info("m=delete, isbn={}", isbn);
+		productRepository.deleteById(isbn);
 	}
-	
-	public void delete(String barCode0) {
-		
+
+	public ProductEntity addAmount(String isbn, Integer amount) {
+		log.info("m=addAmount, isbn={}, amount={}", isbn, amount);
+		ProductEntity product = findByISBN(isbn);
+		product.setAmount(product.getAmount() + amount);
+		return productRepository.save(product);
 	}
-	
-	public Product findById(Long id) {
+
+	public ProductEntity subtractAmount(String isbn, Integer amount) {
+		log.info("m=subtractAmount, isbn={}, amount={}", isbn, amount);
+		ProductEntity product = findByISBN(isbn);
+		if (product.getAmount() < amount)
+			throw new BusinessServiceException(messageFail);
+		product.setAmount(product.getAmount() - amount);
+		return productRepository.save(product);
+	}
+
+	public ProductEntity findByISBN(String isbn) {
+		Optional<ProductEntity> product = productRepository.findById(isbn);
+		if (product.isPresent())
+			return product.get();
 		return null;
 	}
-	
-	public Product addAmount(String barCode, Integer amount) {
-		logger.info("m=addAmount, barCode={}, amount={}", barCode, amount);
-		Product product = findByBarCode(barCode);
-		product.setAmount(product.getAmount() + amount);
-		
-		return productRepository.save(product);
-	}
-	
-	public Product subtractAmount(String barCode, Integer amount) {
-		logger.info("m=subtractAmount, barCode={}, amount={}", barCode, amount);
-		Product product = findByBarCode(barCode);
-		if (product.getAmount() < amount)
-		throw new ServiceException("Quantidade indisponível no estoque");
-		product.setAmount(product.getAmount() - amount);
-		
-		return productRepository.save(product);
-	}
-	
-	
-	
-	
-	
-	
+
+
 }
 
 
